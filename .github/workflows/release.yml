@@ -15,9 +15,6 @@ jobs:
 
     - name: Build and Run Program
       run: |
-        # Build your program
-        make
-
         # Run your program and capture the output
         output=$(RUSTFLAGS="-Awarnings" cargo run --quiet)
 
