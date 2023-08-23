@@ -1,0 +1,54 @@
+name: Run Program and Publish Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build and Run Program
+      run: |
+        # Build your program
+        make
+
+        # Run your program and capture the output
+        output=$(RUSTFLAGS="-Awarnings" cargo run --quiet)
+
+        # Check if the output contains the specific string
+        if echo "$output" | grep -q "true"; then
+          echo "New release found for Edge on Linux."
+        else
+          echo "No new releases."
+          exit 1
+        fi
+        
+    - name: Create Release
+      id: create-release
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const currentDate = new Date().toISOString().split('T')[0];
+          const { data } = await github.rest.repos.createRelease({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            tag_name: currentDate,
+            name: `New version available`,
+            body: 'New version available.',
+            draft: false,
+            prerelease: false
+          });
+          return data.id;
+    # - name: Create Release
+    #   if: ${{ success() }}
+    #   uses: actions/create-release@v1
+    #   with:
+    #     tag_name: edge
+    #     release_name: Release - Edge
+    #     body: This is the edge release
