@@ -1,9 +1,11 @@
 name: Run Program and Publish Release
-
 on:
-  push:
-    branches:
-      - main
+  schedule:
+    - cron: "42 12 * * 0-6"
+# on:
+#   push:
+#     branches:
+#       - main
 
 jobs:
   build:
@@ -37,8 +39,8 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             tag_name: currentDate,
-            name: `New version available`,
-            body: 'New version available.',
+            name: `New version for Edge available for linux`,
+            body: 'Checkout https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/',
             draft: false,
             prerelease: false
           });
