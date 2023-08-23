@@ -13,8 +13,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Check if the current date is present in the webpage HTML
     let local: DateTime<Local> = Local::now();
-    let pattern = local.format("%d-%b-%Y").to_string();
-    // let pattern = "22-Aug-2023";
+    // let pattern = local.format("%d-%b-%Y").to_string();
+    let pattern = "21-Aug-2023";
 
     // let pattern = format!(r"\b{}-{}-{}\b", year, month, day);
     let regex = Regex::new(&pattern)?;
