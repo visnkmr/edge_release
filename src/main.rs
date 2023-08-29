@@ -15,14 +15,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut local: DateTime<Local> = Local::now();
     local = local - Duration::days(1);
     let pattern = local.format("%d-%b-%Y").to_string();
-    println!("today's date is {}",pattern);
+    println!("yesterday's date is {}",pattern);
     // let pattern = "21-Aug-2023";
 
     // let pattern = format!(r"\b{}-{}-{}\b", year, month, day);
     let regex = Regex::new(&pattern)?;
     let contains_date = regex.is_match(&html);
 
-    println!("Contains today's date: {}", contains_date);
+    println!("Contains yesterday's date: {}", contains_date);
     // println!("Contains today's date: {}", pattern);
 
     Ok(())
