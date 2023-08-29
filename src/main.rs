@@ -1,4 +1,4 @@
-use chrono::{Local, Datelike, DateTime};
+use chrono::{Local, Datelike, DateTime, Duration};
 use reqwest::blocking::get;
 use regex::Regex;
 
@@ -12,8 +12,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let html = response.text()?;
 
     // Check if the current date is present in the webpage HTML
-    let local: DateTime<Local> = Local::now();
+    let mut local: DateTime<Local> = Local::now();
+    local = local - Duration::days(1);
     let pattern = local.format("%d-%b-%Y").to_string();
+    println!("today's date is {}",pattern);
     // let pattern = "21-Aug-2023";
 
     // let pattern = format!(r"\b{}-{}-{}\b", year, month, day);
